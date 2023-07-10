@@ -10,11 +10,6 @@ FROM eclipse-temurin:17-jre-jammy
 RUN addgroup producer; adduser  --ingroup producer --disabled-password producer
 USER producer
 WORKDIR /opt/app
-ENV SPRING_RABBITMQ_HOST=$SPRING_RABBITMQ_HOST\
-    SPRING_RABBITMQ_PORT=$SPRING_RABBITMQ_PORT\
-    SPRING_RABBITMQ_USER=$SPRING_RABBITMQ_USER\
-    SPRING_RABBITMQ_PASS=$SPRING_RABBITMQ_PASS\
-    SPRING_MAIN_ABDO=$SPRING_MAIN_ABDO 
 
 EXPOSE 8080
 COPY --from=build /opt/app/target/*.jar /opt/app/*.jar
