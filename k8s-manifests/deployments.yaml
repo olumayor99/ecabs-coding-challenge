@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-deployment
+  namespace: app-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+        - name: consumer
+          image: olumayor99/consumer-service:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: consumer-secret
+            - configMapRef:
+                name: consumer-config
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producer-deployment
+  namespace: app-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: producer
+  template:
+    metadata:
+      labels:
+        app: producer
+    spec:
+      containers:
+        - name: producer
+          image: olumayor99/producer-service:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: producer-secret
+            - configMapRef:
+                name: producer-config

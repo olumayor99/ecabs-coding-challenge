@@ -1,3 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: producer-config
+  namespace: producer-ns
+  data:
+    SPRING_RABBITMQ_HOST: 127.0.0.1
+    SPRING_RABBITMQ_PORT: 5672
+    SPRING_MAIN_ABDO: true
+
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
