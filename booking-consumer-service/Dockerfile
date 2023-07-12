@@ -1,6 +1,9 @@
 FROM eclipse-temurin:17-jdk-jammy
-VOLUME /tmp
+
+WORKDIR /app
+
+COPY ./target/booking-consumer-service-0.0.1-SNAPSHOT.jar /app
+
 EXPOSE 8080
-ARG JAR_FILE=./target/booking-consumer-service-0.0.1-SNAPSHOT.jar
-ADD ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+
+CMD ["java", "-jar", "booking-consumer-service-0.0.1-SNAPSHOT.jar"]
