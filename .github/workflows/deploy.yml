@@ -67,7 +67,6 @@ jobs:
           if kubectl get deployment -n rabbitmq-system rabbitmq-operator &> /dev/null; then
             echo "RabbitMQ operator is already installed."
           else
-            helm repo remove bitnami https://charts.bitnami.com/bitnami
             helm repo add bitnami https://charts.bitnami.com/bitnami
             helm install rabbitmq-cluster-operator bitnami/rabbitmq-cluster-operator -n rabbitmq-system --create-namespace
           fi
