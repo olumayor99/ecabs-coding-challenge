@@ -70,7 +70,6 @@ jobs:
             helm repo remove bitnami https://charts.bitnami.com/bitnami
             helm repo add bitnami https://charts.bitnami.com/bitnami
             helm install rabbitmq-cluster-operator bitnami/rabbitmq-cluster-operator -n rabbitmq-system --create-namespace
-          done
           fi
 
       - name: Install RabbitMQ Cluster
