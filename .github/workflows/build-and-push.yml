@@ -29,17 +29,17 @@ jobs:
 
       - name: Build Producer Docker image
         run: |
-          cd ../../../booking-producer-service/
+          cd booking-producer-service/
           docker build -t olumayor99/producer:latest .
 
       - name: Build Consumer Docker image
         run: |
-          cd ../../../booking-consumer-service/
+          cd booking-consumer-service/
           docker build -t olumayor99/consumer:latest .
 
       - name: Build Contract Docker image
         run: |
-          cd ../../../booking-contract/
+          cd booking-contract/
           docker build -t olumayor99/contract:latest .
 
       - name: Log in to Docker Hub
