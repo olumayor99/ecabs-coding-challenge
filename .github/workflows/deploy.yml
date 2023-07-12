@@ -42,6 +42,12 @@ jobs:
           sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
           kubectl version --client
 
+      - name: Install Helm
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
       - name: Check AWS version
         run: |
           aws --version
@@ -52,6 +58,10 @@ jobs:
 
       - name: Connect to EKS cluster
         run: aws eks --region ${{ secrets.EKS_REGION }} update-kubeconfig --name ${{ secrets.EKS_CLUSTER }}
+
+      - name: Install RabbitMQ Operator
+        run: |
+          kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
 
       - name: Verify the deployment
         run: kubectl get pods
