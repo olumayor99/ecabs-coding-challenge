@@ -8,6 +8,7 @@ on:
         "booking-consumer-service/**",
         "booking-producer-service/**",
         "booking-contract/**",
+        ".github/workflows/build-and-push.yml",
       ]
   pull_request:
     branches: ["master"]
@@ -16,6 +17,7 @@ on:
         "booking-consumer-service/**",
         "booking-producer-service/**",
         "booking-contract/**",
+        ".github/workflows/build-and-push.yml",
       ]
 
 jobs:
