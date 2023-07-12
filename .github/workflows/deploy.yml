@@ -81,6 +81,9 @@ jobs:
 
       - name: Deploy RabbitMQ Cluster
         run: |
+          helm repo remove bitnami https://charts.bitnami.com/bitnami
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo update
           helm install my-rabbitmq bitnami/rabbitmq
 
       - name: Verify the deployment
