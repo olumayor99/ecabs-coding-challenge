@@ -37,19 +37,25 @@ jobs:
 
       - name: Install kubectl
         run: |
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-          echo "$(<kubectl.sha256) kubectl" | sha256sum --check
-
-
-          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-          kubectl version --client
+          if kubectl version &> /dev/null; then
+            echo "Kubectl is already installed."
+          else
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+            echo "$(<kubectl.sha256) kubectl" | sha256sum --check
+            sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+            kubectl version --client
+          fi
 
       - name: Install Helm
         run: |
-          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-          chmod 700 get_helm.sh
-          ./get_helm.sh
+          if helm version &> /dev/null; then
+            echo "Helm is already installed."
+          else
+            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+            chmod 700 get_helm.sh
+            ./get_helm.sh
+          fi
 
       - name: Check AWS version
         run: |
@@ -72,7 +78,7 @@ jobs:
             helm install rabbitmq-cluster-operator bitnami/rabbitmq-cluster-operator -n rabbitmq-system --create-namespace
           fi
 
-      - name: Install RabbitMQ Cluster
+      - name: Deploy RabbitMQ Cluster
         run: |
           kubectl apply -f k8s-manifests/rabbitmq.yaml
 
