@@ -1,15 +1,6 @@
-FROM eclipse-temurin:17-jdk-jammy as build
-WORKDIR /opt/app
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:go-offline
-COPY ./src ./src
-RUN ./mvnw clean install
-
-FROM eclipse-temurin:17-jre-jammy
-RUN addgroup consumer; adduser --ingroup consumer --disabled-password consumer
-USER consumer
-WORKDIR /opt/app
+FROM eclipse-temurin:17-jdk-jammy
+VOLUME /tmp
 EXPOSE 8080
-COPY --from=build /opt/app/target/*.jar /opt/app/*.jar
-ENTRYPOINT ["java", "-jar", "/opt/app/*.jar" ]
+ARG JAR_FILE=target/booking-consumer-service-0.0.1-SNAPSHOT.jar
+ADD ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
