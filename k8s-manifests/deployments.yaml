@@ -19,6 +19,9 @@ spec:
           image: olumayor99/consumer:latest
           ports:
             - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: consumer-config
 
 ---
 apiVersion: apps/v1
@@ -41,3 +44,6 @@ spec:
           image: olumayor99/producer:latest
           ports:
             - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: producer-config

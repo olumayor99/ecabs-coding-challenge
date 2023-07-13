@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: producer-config
+  namespace: app-ns
+data:
+  SPRING_RABBITMQ_HOST: rabbitmq-cluster.default.svc.cluster.local
+  SPRING_RABBITMQ_PORT: "5672"
+  SPRING_MAIN_ABDO: "true"
+  SPRING_RABBITMQ_USER: user
+  SPRING_RABBITMQ_PASS: DQA84JDR0KWGNiwzubuntu
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consumer-config
+  namespace: app-ns
+data:
+  SPRING_RABBITMQ_HOST: rabbitmq-cluster.default.svc.cluster.local
+  SPRING_RABBITMQ_PORT: "5672"
+  SPRING_LISTENER_DIRECT_DEFAULT: "false"
+  SPRING_DATASOURCE_URL: jdbc:h2:mem:ecabs
+  SPRING_DATASOURCE_DCN: org.h2.Driver
+  SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.H2Dialect
+  SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+  SPRING_JPA_GENERATE_DDL: "true"
+  SPRING_RABBITMQ_USER: user
+  SPRING_RABBITMQ_PASS: DQA84JDR0KWGNiwzubuntu
+  SPRING_DATASOURCE_USER: sa
+  SPRING_DATASOURCE_PASS: password
