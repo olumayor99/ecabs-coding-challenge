@@ -92,7 +92,7 @@ jobs:
           if helm list | grep rabbitmq &> /dev/null; then
             echo "rabbitmq release exists."
           else
-            helm install rabbitmq bitnami/rabbitmq  --set fullnameOverride=rabbitmq-cluster,replicaCount=3
+            helm install rabbitmq oci://registry-1.docker.io/bitnamicharts/rabbitmq --set auth.username=guest,auth.password=guest,fullnameOverride=rabbitmq-cluster,replicaCount=3
           fi
 
       - name: Deploy Apps and Resources
