@@ -95,4 +95,4 @@ jobs:
           kubectl apply -f k8s-manifests/services.yaml
 
       - name: Verify the deployment
-        run: kubectl get pods -A
+        run: kubectl get all -A
