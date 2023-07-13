@@ -80,9 +80,7 @@ jobs:
 
       - name: Deploy RabbitMQ Cluster
         run: |
-          helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm repo update
-          helm install my-rabbitmq bitnami/rabbitmq
+          kubectl apply -f rabbitmq.yaml
 
       - name: Verify the deployment
         run: kubectl get pods -A
