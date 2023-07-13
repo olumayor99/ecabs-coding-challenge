@@ -92,7 +92,7 @@ jobs:
           if helm list | grep rabbitmq &> /dev/null; then
             echo "rabbitmq release exists."
           else
-            helm install rabbitmq bitnami/rabbitmq  --set auth.username=${{ secrets.SPRING_RABBITMQ_USER }},auth.password=${{ secrets.SPRING_RABBITMQ_PASS }},fullnameOverride=rabbitmq-cluster
+            helm install rabbitmq bitnami/rabbitmq  --set fullnameOverride=rabbitmq-cluster,replicaCount=3
           fi
 
       - name: Deploy Apps and Resources
