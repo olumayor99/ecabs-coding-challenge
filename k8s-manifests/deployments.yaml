@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: consumer
-          image: olumayor99/consumer-service:latest
+          image: olumayor99/consumer:latest
           ports:
             - containerPort: 8080
           envFrom:
@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
         - name: producer
-          image: olumayor99/producer-service:latest
+          image: olumayor99/producer:latest
           ports:
             - containerPort: 8080
           envFrom:
@@ -51,3 +51,25 @@ spec:
                 name: producer-secret
             - configMapRef:
                 name: producer-config
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contract-deployment
+  namespace: app-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: contract
+  template:
+    metadata:
+      labels:
+        app: contract
+    spec:
+      containers:
+        - name: contract
+          image: olumayor99/contract:latest
+          ports:
+            - containerPort: 8080

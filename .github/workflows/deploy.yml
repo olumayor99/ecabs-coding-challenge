@@ -84,5 +84,9 @@ jobs:
           helm repo update
           helm install rabbitmq bitnami/rabbitmq  --set rabbitmq.username=${{ secrets.SPRING_RABBITMQ_USER }},rabbitmq.password=${{ secrets.SPRING_RABBITMQ_PASS }},rabbitmq.erlangCookie=guest,fullnameOverride=rabbitmq-cluster
 
+      - name: Deploy Apps and Resources
+        run: |
+          kubectl apply -f k8s-manifests/
+
       - name: Verify the deployment
         run: kubectl get pods -A
