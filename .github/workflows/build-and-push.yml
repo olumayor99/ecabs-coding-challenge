@@ -59,4 +59,3 @@ jobs:
         run: |
           docker push olumayor99/producer:latest
           docker push olumayor99/consumer:latest
-          docker push olumayor99/contract:latest
