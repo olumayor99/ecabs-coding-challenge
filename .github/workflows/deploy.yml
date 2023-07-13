@@ -80,9 +80,13 @@ jobs:
 
       - name: Deploy RabbitMQ Cluster
         run: |
-          helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm repo update
-          helm install rabbitmq bitnami/rabbitmq  --set rabbitmq.username=${{ secrets.SPRING_RABBITMQ_USER }},rabbitmq.password=${{ secrets.SPRING_RABBITMQ_PASS }},rabbitmq.erlangCookie=guest,fullnameOverride=rabbitmq-cluster
+          if kubectl get pods | grep rabbitmq-cluster &> /dev/null; then
+            echo "RabbitMQ Cluster is already deployed."
+          else
+            helm repo add bitnami https://charts.bitnami.com/bitnami
+            helm repo update
+            helm install rabbitmq bitnami/rabbitmq  --set rabbitmq.username=${{ secrets.SPRING_RABBITMQ_USER }},rabbitmq.password=${{ secrets.SPRING_RABBITMQ_PASS }},rabbitmq.erlangCookie=guest,fullnameOverride=rabbitmq-cluster
+          fi
 
       - name: Deploy Apps and Resources
         run: |
