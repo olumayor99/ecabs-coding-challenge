@@ -3,18 +3,20 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: producer-config
-  namespace: producer-ns
+  namespace: app-ns
 data:
   SPRING_RABBITMQ_HOST: rabbitmq-cluster.svc.cluster.local
   SPRING_RABBITMQ_PORT: "80"
   SPRING_MAIN_ABDO: "true"
+  SPRING_RABBITMQ_USER: guest
+  SPRING_RABBITMQ_PASS: guest
 
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: consumer-config
-  namespace: consumer-ns
+  namespace: app-ns
 data:
   SPRING_RABBITMQ_HOST: rabbitmq-cluster.svc.cluster.local
   SPRING_RABBITMQ_PORT: "80"
@@ -24,3 +26,7 @@ data:
   SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.H2Dialect
   SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
   SPRING_JPA_GENERATE_DDL: "true"
+  SPRING_RABBITMQ_USER: guest
+  SPRING_RABBITMQ_PASS: guest
+  SPRING_DATASOURCE_USER: sa
+  SPRING_DATASOURCE_PASS: password
