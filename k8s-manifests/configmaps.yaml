@@ -4,10 +4,10 @@ kind: ConfigMap
 metadata:
   name: producer-config
   namespace: producer-ns
-  data:
-    SPRING_RABBITMQ_HOST: rabbitmq-cluster.svc.cluster.local
-    SPRING_RABBITMQ_PORT: 80
-    SPRING_MAIN_ABDO: true
+data:
+  SPRING_RABBITMQ_HOST: rabbitmq-cluster.svc.cluster.local
+  SPRING_RABBITMQ_PORT: "80"
+  SPRING_MAIN_ABDO: "true"
 
 ---
 apiVersion: v1
@@ -15,12 +15,12 @@ kind: ConfigMap
 metadata:
   name: consumer-config
   namespace: consumer-ns
-  data:
-    SPRING_RABBITMQ_HOST: rabbitmq-cluster.svc.cluster.local
-    SPRING_RABBITMQ_PORT: 80
-    SPRING_LISTENER_DIRECT_DEFAULT: false
-    SPRING_DATASOURCE_URL: jdbc:h2:mem:ecabs
-    SPRING_DATASOURCE_DCN: org.h2.Driver
-    SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.H2Dialect
-    SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
-    SPRING_JPA_GENERATE_DDL: true
+data:
+  SPRING_RABBITMQ_HOST: rabbitmq-cluster.svc.cluster.local
+  SPRING_RABBITMQ_PORT: "80"
+  SPRING_LISTENER_DIRECT_DEFAULT: "false"
+  SPRING_DATASOURCE_URL: jdbc:h2:mem:ecabs
+  SPRING_DATASOURCE_DCN: org.h2.Driver
+  SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.H2Dialect
+  SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+  SPRING_JPA_GENERATE_DDL: "true"
