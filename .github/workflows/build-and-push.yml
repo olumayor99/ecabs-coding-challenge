@@ -19,20 +19,6 @@ on:
         "booking-contract/**",
         ".github/workflows/build-and-push.yml",
       ]
-env:
-  SPRING_RABBITMQ_HOST: ${{ secrets.SPRING_RABBITMQ_HOST }}
-  SPRING_RABBITMQ_PORT: ${{ secrets.SPRING_RABBITMQ_PORT }}
-  SPRING_RABBITMQ_USER: ${{ secrets.SPRING_RABBITMQ_USER }}
-  SPRING_RABBITMQ_PASS: ${{ secrets.SPRING_RABBITMQ_PASS }}
-  SPRING_LISTENER_DIRECT_DEFAULT: ${{ secrets.SPRING_LISTENER_DIRECT_DEFAULT }}
-  SPRING_MAIN_ABDO: ${{ secrets.SPRING_MAIN_ABDO }}
-  SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
-  SPRING_DATASOURCE_DCN: ${{ secrets.SPRING_DATASOURCE_DCN }}
-  SPRING_DATASOURCE_USER: ${{ secrets.SPRING_DATASOURCE_USER }}
-  SPRING_DATASOURCE_PASS: ${{ secrets.SPRING_DATASOURCE_PASS }}
-  SPRING_JPA_DATABASE_PLATFORM: ${{ secrets.SPRING_JPA_DATABASE_PLATFORM }}
-  SPRING_JPA_HIBERNATE_DDL_AUTO: ${{ secrets.SPRING_JPA_HIBERNATE_DDL_AUTO }}
-  SPRING_JPA_GENERATE_DDL: ${{ secrets.SPRING_JPA_GENERATE_DDL }}
 
 jobs:
   build-and-push:
@@ -62,11 +48,6 @@ jobs:
         run: |
           cd booking-consumer-service/
           docker build -t olumayor99/consumer:latest .
-
-      - name: Build Contract Docker image
-        run: |
-          cd booking-contract/
-          docker build -t olumayor99/contract:latest .
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
