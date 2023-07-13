@@ -3,14 +3,14 @@ kind: RabbitmqCluster
 metadata:
   name: rabbitmqcluster-prod
 spec:
-  replicas: 3
+  replicas: 2
   resources:
     requests:
       cpu: 500m
-      memory: 1Gi
+      memory: 0.5Gi
     limits:
-      cpu: 1
-      memory: 2Gi
+      cpu: 500m
+      memory: 0.5Gi
   rabbitmq:
     additionalConfig: |
       log.console.level = info

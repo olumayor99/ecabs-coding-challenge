@@ -141,7 +141,7 @@ resource "aws_eks_node_group" "bg_node_group" {
   node_group_name = "bg-node-group"
   node_role_arn   = aws_iam_role.bg_node_group_role.arn
   subnet_ids      = [aws_subnet.eks_subnet_1.id, aws_subnet.eks_subnet_2.id,] 
-  instance_types  = ["t3.medium"]
+  instance_types  = ["t3.large"]
   scaling_config {
     desired_size = 3
     min_size     = 2
