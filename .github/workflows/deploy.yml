@@ -73,9 +73,9 @@ jobs:
           if kubectl get deployment -n rabbitmq-system rabbitmq-cluster-operator &> /dev/null; then
             echo "RabbitMQ operator is already installed."
           else
-            helm install rabbitmq-o oci://registry-1.docker.io/bitnamicharts/rabbitmq-cluster-operator
             kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
             kubectl annotate storageclass local-path storageclass.kubernetes.io/is-default-class=true
+            helm install rabbitmq-o oci://registry-1.docker.io/bitnamicharts/rabbitmq-cluster-operator
           fi
 
       - name: Deploy RabbitMQ Cluster
@@ -83,7 +83,7 @@ jobs:
           if helm list | grep rabbitmq-dep &> /dev/null; then
             echo "rabbitmq release exists."
           else
-            helm install rabbitmq-dep oci://registry-1.docker.io/bitnamicharts/rabbitmq --set auth.username=${{ secrets.SPRING_RABBITMQ_USER }},auth.password=${{ secrets.SPRING_RABBITMQ_PASS }},fullnameOverride=rabbitmq-cluster,replicaCount=3
+            helm install rabbitmq-dep oci://registry-1.docker.io/bitnamicharts/rabbitmq --set auth.username=${{ secrets.SPRING_RABBITMQ_USER }} --set auth.password=${{ secrets.SPRING_RABBITMQ_PASS }} --set auth.erlangCookie=${{ secrets.ERLANG_COOKIE }} --set fullnameOverride=rabbitmq-cluster --set replicaCount=3
           fi
 
       - name: Deploy Apps and Resources
