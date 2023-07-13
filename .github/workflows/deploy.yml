@@ -83,7 +83,7 @@ jobs:
           if kubectl get ns rabbitmq-cluster &> /dev/null; then
               echo "RabbitMQ namespace already exists."
             else
-              kubectl create ns rabbitmq
+              kubectl create ns rabbitmq-cluster
           fi
 
       - name: Deploy RabbitMQ Cluster
