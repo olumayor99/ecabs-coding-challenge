@@ -80,7 +80,33 @@ jobs:
 
       - name: Deploy RabbitMQ Cluster
         run: |
-          kubectl apply -f k8s-manifests/rabbitmq.yaml
+          helm repo add aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+          helm repo update
+          helm upgrade --install aws-ebs-csi-driver \
+              --namespace kube-system \
+              aws-ebs-csi-driver/aws-ebs-csi-driver
+
+          helm repo list
+          helm repo update
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm dependency build
+
+          export USERNAME='guest'
+          export PASSWORD='guest'
+          export ERLANG_COOKIE='guest'
+
+          helm dependency build
+
+          helm upgrade --install rabbitmq --namespace rabbitmq --create-namespace ./ -f values.yaml \
+              --set podManagementPolicy=Parallel \
+              --set replicaCount=3 \
+              --set auth.username=${USERNAME} \
+              --set auth.password=${PASSWORD} \
+              --set auth.erlangCookie=${ERLANG_COOKIE} \
+              --set metrics.enabled=true \
+              --set persistence.size=1Gi \
+              --set persistence.enabled=true \
+              --set image.tag=3.10.13
 
       - name: Verify the deployment
         run: kubectl get pods -A
