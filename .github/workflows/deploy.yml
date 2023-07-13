@@ -70,7 +70,7 @@ jobs:
 
       - name: Install RabbitMQ Operator
         run: |
-          if kubectl get deployment -n rabbitmq-system rabbitmq-cluster-operator &> /dev/null; then
+          if kubectl get deployment | grep rabbitmq-cluster-operator &> /dev/null; then
             echo "RabbitMQ operator is already installed."
           else
             kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
