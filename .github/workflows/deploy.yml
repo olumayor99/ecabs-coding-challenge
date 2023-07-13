@@ -90,10 +90,7 @@ jobs:
 
       - name: Deploy Apps and Resources
         run: |
-          kubectl apply -f k8s-manifests/namespace.yaml
-          kubectl apply -f k8s-manifests/configmaps.yaml
-          kubectl apply -f k8s-manifests/deployments.yaml
-          kubectl apply -f k8s-manifests/services.yaml
+          kubectl apply -f k8s-manifests/
 
       - name: Verify the deployment
         run: kubectl get pods -A
