@@ -73,18 +73,9 @@ jobs:
           if kubectl get deployment -n rabbitmq-system rabbitmq-cluster-operator &> /dev/null; then
             echo "RabbitMQ operator is already installed."
           else
-            kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
+            helm install my-release oci://registry-1.docker.io/bitnamicharts/rabbitmq-cluster-operator
             kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
             kubectl annotate storageclass local-path storageclass.kubernetes.io/is-default-class=true
-          fi
-
-      - name: Add RabbitMQ Repo
-        run: |
-          if kubectl get pods | grep rabbitmq-cluster &> /dev/null; then
-            echo "RabbitMQ Cluster is already deployed."
-          else
-            helm repo add bitnami https://charts.bitnami.com/bitnami
-            helm repo update
           fi
 
       - name: Deploy RabbitMQ Cluster
@@ -92,7 +83,7 @@ jobs:
           if helm list | grep rabbitmq &> /dev/null; then
             echo "rabbitmq release exists."
           else
-            helm install rabbitmq oci://registry-1.docker.io/bitnamicharts/rabbitmq --set auth.username=guest,auth.password=guest,fullnameOverride=rabbitmq-cluster,replicaCount=3
+            helm install rabbitmq oci://registry-1.docker.io/bitnamicharts/rabbitmq --set auth.username=${{ secrets.SPRING_RABBITMQ_USER }},auth.password=${{ secrets.SPRING_RABBITMQ_PASS }},fullnameOverride=rabbitmq-cluster,replicaCount=3
           fi
 
       - name: Deploy Apps and Resources
