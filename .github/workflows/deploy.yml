@@ -83,11 +83,7 @@ jobs:
           if kubectl get pods -n rabbitmq | grep rabbitmq-cluster &> /dev/null; then
             echo "RabbitMQ Cluster is already deployed."
           else
-            if kubectl get ns | grep rabbitmq &> /dev/null; then
-              echo "RabbitMQ namespace already exists."
-            else
-              kubectl create ns rabbitmq
-            fi
+            kubectl create ns rabbitmq
             helm repo add bitnami https://charts.bitnami.com/bitnami
             helm repo update
             helm install rabbitmq bitnami/rabbitmq  --set auth.username=${{ secrets.SPRING_RABBITMQ_USER }},auth.password=${{ secrets.SPRING_RABBITMQ_PASS }},fullnameOverride=rabbitmq-cluster,namespaceOverride=rabbitmq
