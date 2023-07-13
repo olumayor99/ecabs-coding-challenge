@@ -78,17 +78,9 @@ jobs:
             kubectl annotate storageclass local-path storageclass.kubernetes.io/is-default-class=true
           fi
 
-      - name: Create RabbitMQ Namespace
-        run: |
-          if kubectl get ns rabbitmq-cluster &> /dev/null; then
-              echo "RabbitMQ namespace already exists."
-            else
-              kubectl create ns rabbitmq-cluster
-          fi
-
       - name: Deploy RabbitMQ Cluster
         run: |
-          if kubectl get pods -n rabbitmq | grep rabbitmq-cluster &> /dev/null; then
+          if kubectl get pods | grep rabbitmq-cluster &> /dev/null; then
             echo "RabbitMQ Cluster is already deployed."
           else
             helm repo add bitnami https://charts.bitnami.com/bitnami
