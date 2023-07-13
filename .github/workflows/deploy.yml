@@ -78,13 +78,20 @@ jobs:
             kubectl annotate storageclass local-path storageclass.kubernetes.io/is-default-class=true
           fi
 
-      - name: Deploy RabbitMQ Cluster
+      - name: Add RabbitMQ Repo
         run: |
           if kubectl get pods | grep rabbitmq-cluster &> /dev/null; then
             echo "RabbitMQ Cluster is already deployed."
           else
             helm repo add bitnami https://charts.bitnami.com/bitnami
             helm repo update
+          fi
+
+      - name: Deploy RabbitMQ Cluster
+        run: |
+          if helm list | grep rabbitmq &> /dev/null; then
+            echo "rabbitmq release exists."
+          else
             helm install rabbitmq bitnami/rabbitmq  --set auth.username=${{ secrets.SPRING_RABBITMQ_USER }},auth.password=${{ secrets.SPRING_RABBITMQ_PASS }},fullnameOverride=rabbitmq-cluster
           fi
 
