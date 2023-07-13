@@ -80,7 +80,7 @@ jobs:
 
       - name: Deploy RabbitMQ Cluster
         run: |
-          kubectl apply -f rabbitmq.yaml
+          kubectl apply -f k8s-manifests/rabbitmq.yaml
 
       - name: Verify the deployment
         run: kubectl get pods -A
